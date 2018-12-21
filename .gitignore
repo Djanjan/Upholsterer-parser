@@ -1,3 +1,4 @@
 djan_parser.code-workspace
 items.jl
 items.json
+__pycache__/

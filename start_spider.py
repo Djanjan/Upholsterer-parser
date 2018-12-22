@@ -12,7 +12,7 @@ import json
 
 process = CrawlerProcess(get_project_settings())
 #
-list_spider = ["goodfonSpider","wallpaperscraftSpider"]
+list_spider = ["goodfonSpider","wallpaperscraftSpider", "oboitutSpider"]
 
 with open("items.json", 'w') as file:
         file.write("[")

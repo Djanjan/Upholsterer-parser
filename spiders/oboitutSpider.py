@@ -8,25 +8,39 @@ from djan_parser.settings import max_count_items
 class OboitutSpiderSpider(scrapy.Spider):
     name = 'oboitutSpider'
     allowed_domains = ['oboitut.com']
-    
-    buff_catalog = str(" ")
+    settings = {}
 
     def start_requests(self):
+        self.settings = {
+            "Catalogs":{
+                "city": "goroda",
+                "games": "igry",
+                "space":"kosmos",
+                "animals":"podvodnyy-mir",
+                "nature":"priroda",
+                "fantasy":"fentezi"
+            },
+            "Count Images": 50
+        }
+
         self.count_items = 0
-        self.count_items_max = max_count_items
+        self.count_items_max = self.settings["Count Images"]
         yield scrapy.Request('https://oboitut.com/', self.parse)
 
     def parse(self, response):
         for imgConter in  response.css('div#dle-content div.verh'):
             img = imgConter.css('a::attr(href)').extract()
             catalog = imgConter.css('span.catcol a::attr(href)').extract_first()
-            yield scrapy.Request(img[1], callback=self.parse_image_page, 
-                                        meta={'catalog': catalog.split("/")[3]})
+            for key, value in self.settings["Catalogs"].items():
+                if value == catalog.split("/")[3]:
+                    yield scrapy.Request(img[1], callback=self.parse_image_page, 
+                                        meta={'catalog': key})
 
         #Переход на следующию страницу
-        href = response.css('div.navigation a::attr(href)').extract_first()
+        hrefs = response.css('div.navigation a::attr(href)').extract()
         #href_page = response.urljoin(href)
-        yield response.follow(href, self.parse)
+        for href in hrefs:      
+            yield response.follow(href, self.parse)
 
     def parse_image_page(self, response):
         image = response.css('div.news span.original a::attr(href)').extract_first()

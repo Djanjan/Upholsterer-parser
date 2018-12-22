@@ -1,0 +1,7 @@
+_pycache_/
+items.json
+spiders/__pycache__/goodfonSpider.cpython-37.pyc
+spiders/__pycache__/oboitutSpider.cpython-37.pyc
+spiders/__pycache__/wallpaperscraftSpider.cpython-37.pyc
+djan_parser.code-workspace
+items.jl

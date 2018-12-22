@@ -1,4 +1,4 @@
-_pycache_/
+__pycache__/
 items.json
 spiders/__pycache__/goodfonSpider.cpython-37.pyc
 spiders/__pycache__/oboitutSpider.cpython-37.pyc

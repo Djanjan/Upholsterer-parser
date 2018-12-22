@@ -1,4 +1,5 @@
+__pycache__/
+items.json
+spiders/__pycache__/
 djan_parser.code-workspace
 items.jl
-items.json
-__pycache__/

@@ -8,12 +8,32 @@ from djan_parser.settings import max_count_items
 class GoodfonspiderSpider(scrapy.Spider):
     name = 'goodfonSpider'
     allowed_domains = ['goodfon.ru']
+    settings = {}
     
     buff_catalog = str(" ")
 
     def start_requests(self):
+        self.settings = {
+            "Catalogs":{
+                "abstraction": "abstract",
+                "city":"city",
+                "animals":"animals",
+                "games":"games",
+                "space":"space",
+                "macro":"macro",
+                "minimalism":"minimalism",
+                "music":"music",
+                "nature":"nature",
+                "textures":"textures",
+                "hi-tech":"hi-tech",
+                "fantasy":"fantasy",
+                "rendering":"rendering",
+                "landscapes":"landscapes"
+            },
+            "Count Images": 100
+        }
         self.count_items = 0
-        self.count_items_max = max_count_items
+        self.count_items_max = self.settings["Count Images"]
         yield scrapy.Request('http://goodfon.ru/', self.parse)
 
     def parse(self, response):
@@ -31,8 +51,12 @@ class GoodfonspiderSpider(scrapy.Spider):
     def parse_image_page(self, response):
         image = response.urljoin(response.css('div.wallpaper__item div.wallpaper__item__fon div.wallpaper__bottom div.wallpaper__download div a#download::attr(href)').extract_first())
         catal = response.css('div.wallpaper div.wallpaper__first div.wallpaper__catalog h2.wallpaper__zagh2 a::attr(href)').extract_first()
-        yield scrapy.Request(image, callback=self.parse_image,
-                            meta={'catalog': catal.split("/")[4]})
+
+        for key, value in self.settings["Catalogs"].items():
+                if value == catal.split("/")[4]:
+                    yield scrapy.Request(image, callback=self.parse_image,
+                                        meta={'catalog': key})
+
 
     def parse_image(self, response):
         self.count_items += 1

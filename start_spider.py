@@ -11,8 +11,8 @@ import requests
 import json
 
 process = CrawlerProcess(get_project_settings())
-#"goodfonSpider","wallpaperscraftSpider", "oboitutSpider"
-list_spider = ["goodfonSpider","wallpaperscraftSpider", "oboitutSpider"]
+#"goodfonSpider","wallpaperscraftSpider", "oboitutSpider", "nastolSpider"
+list_spider = ["goodfonSpider","wallpaperscraftSpider", "oboitutSpider", "nastolSpider"]
 
 with open("items.json", 'w') as file:
         file.write("[")

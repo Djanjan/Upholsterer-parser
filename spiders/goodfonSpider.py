@@ -27,7 +27,8 @@ class GoodfonspiderSpider(scrapy.Spider):
                 "textures":"textures",
                 "hi-tech":"hi-tech",
                 "fantasy":"fantasy",
-                "rendering":"rendering"
+                "rendering":"rendering",
+                "landscapes":"landscapes"
             },
             "Count Images": 100
         }
